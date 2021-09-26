@@ -13,7 +13,11 @@ class _AboutUsPageState extends State<AboutUsPage> {
     return SafeArea(
       child: Scaffold(
         // TODO
-        body: Container(),
+        body: Container(
+          child: Center(
+            child: Text('About Us'),
+          ),
+        ),
       ),
     );
   }

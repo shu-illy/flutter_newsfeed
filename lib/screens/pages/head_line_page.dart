@@ -7,8 +7,13 @@ class HeadLinePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          // TODO
-          body: Container()),
+        // TODO
+        body: Container(
+          child: Center(
+            child: Text('Headlihne Page'),
+          ),
+        ),
+      ),
     );
   }
 }
