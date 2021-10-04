@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_newsfeed/view/components/search_bar.dart';
 
 class NewsListPage extends StatelessWidget {
   const NewsListPage({Key? key}) : super(key: key);
@@ -17,7 +18,9 @@ class NewsListPage extends StatelessWidget {
           child: Column(
             children: <Widget>[
               // TODO 検索ワード
-              // SearchBar(),
+              SearchBar(
+                onSearch: (keyword) => getKeywordNews(context, keyword),
+              ),
               // TODO: カテゴリー選択Chips
               // CategoryChips(),
               Expanded(
@@ -33,5 +36,12 @@ class NewsListPage extends StatelessWidget {
   }
 
 // TODO: 記事更新処理
-  onRefresh(BuildContext context) {}
+  onRefresh(BuildContext context) {
+    print("NewsListPage.onRefresh");
+  }
+
+// TODO キーワード記事取得処理
+  getKeywordNews(BuildContext context, keyword) {
+    print("NewsListPage.getKeywordNews");
+  }
 }
