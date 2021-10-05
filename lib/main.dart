@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_newsfeed/viewmodels/news_list_viewmodel.dart';
+import 'package:provider/provider.dart';
 
 import 'view/screens/home_screen.dart';
 import 'view/style/style.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  runApp(ChangeNotifierProvider<NewsListViewModel>(
+    create: (context) => NewsListViewModel(),
+    child: MyApp(),
+  ));
+}
 
 class MyApp extends StatelessWidget {
   @override
