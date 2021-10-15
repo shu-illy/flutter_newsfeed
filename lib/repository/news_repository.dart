@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_newsfeed/data/category_info.dart';
 import 'package:flutter_newsfeed/data/search_type.dart';
 import 'package:flutter_newsfeed/models/model/news_model.dart';
@@ -12,7 +14,7 @@ class NewsRepository {
     String? keyword,
     Category? category,
   }) async {
-    List<Article> result = [];
+    List<Article> results = [];
 
     http.Response? response;
     switch (searchType) {
@@ -31,6 +33,14 @@ class NewsRepository {
         break;
     }
 
-    return result;
+    if (response.statusCode == 200) {
+      //
+      final responseBody = response.body;
+      results = News.fromJson(jsonDecode(responseBody)).articles;
+    } else {
+      throw Exception('Failed to load news');
+    }
+
+    return results;
   }
 }
