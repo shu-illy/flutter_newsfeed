@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_newsfeed/data/search_type.dart';
+import 'package:flutter_newsfeed/models/model/news_model.dart';
+import 'package:flutter_newsfeed/view/components/head_line_item.dart';
 import 'package:flutter_newsfeed/view/components/page_transformer.dart';
 import 'package:flutter_newsfeed/viewmodels/head_line_view_model.dart';
 import 'package:provider/provider.dart';
@@ -16,37 +18,38 @@ class HeadLinePage extends StatelessWidget {
     }
     return SafeArea(
       child: Scaffold(
-          body: Consumer<HeadLineViewModel>(
-            builder: (context, model, child) {
-              return PageTransformer(
-                pageViewBuilder: (context, pageVisibilityResolver) {
-                  return PageView.builder(
-                    controller: PageController(),
-                    itemCount: model.articles.length,
-                    itemBuilder: (context, index) {
-                      final article = model.articles[index];
-                      final pageVisibility =
-                          pageVisibilityResolver.resolvePageVisibility(index);
-                      final visibleFraction = pageVisibility.visibleFraction;
-                      return Opacity(
-                        opacity: visibleFraction,
-                        child: Container(
-                          color: Colors.blueAccent,
-                          child: Center(
-                            child: Column(
-                              children: <Widget>[
-                                Text(article.title ?? ""),
-                                Text(article.description ?? ""),
-                              ],
-                            ),
-                          ),
-                        ),
+          body: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Consumer<HeadLineViewModel>(
+              builder: (context, model, child) {
+                if (model.isLoading) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return PageTransformer(
+                    pageViewBuilder: (context, pageVisibilityResolver) {
+                      return PageView.builder(
+                        controller: PageController(viewportFraction: 0.85),
+                        itemCount: model.articles.length,
+                        itemBuilder: (context, index) {
+                          final article = model.articles[index];
+                          final pageVisibility = pageVisibilityResolver
+                              .resolvePageVisibility(index);
+                          // final visibleFraction = pageVisibility.visibleFraction;
+                          return HeadLineItem(
+                            article: article,
+                            pageVisibility: pageVisibility,
+                            onArticleClicked: (article) =>
+                                _openArticleWebPage(context, article),
+                          );
+                        },
                       );
                     },
                   );
-                },
-              );
-            },
+                }
+              },
+            ),
           ),
           floatingActionButton: FloatingActionButton(
             child: Icon(Icons.refresh),
@@ -60,5 +63,10 @@ class HeadLinePage extends StatelessWidget {
     print('HeadLinePage.onRefresh');
     final viewModel = context.read<HeadLineViewModel>();
     await viewModel.getHeadLines(searchType: SearchType.HEAD_LINE);
+  }
+
+  _openArticleWebPage(BuildContext context, Article article) {
+    // TODO
+    print("HeadLinePage._openArticleWebPage: ${article.url}");
   }
 }
