@@ -6,6 +6,8 @@ import 'package:flutter_newsfeed/view/components/page_transformer.dart';
 import 'package:flutter_newsfeed/viewmodels/head_line_view_model.dart';
 import 'package:provider/provider.dart';
 
+import '../news_web_page_screen.dart';
+
 class HeadLinePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -66,7 +68,10 @@ class HeadLinePage extends StatelessWidget {
   }
 
   _openArticleWebPage(BuildContext context, Article article) {
-    // TODO
-    print("HeadLinePage._openArticleWebPage: ${article.url}");
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => NewsWebPageScreen(article: article),
+      ),
+    );
   }
 }

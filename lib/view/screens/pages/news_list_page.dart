@@ -4,6 +4,7 @@ import 'package:flutter_newsfeed/data/search_type.dart';
 import 'package:flutter_newsfeed/view/components/article_tile.dart';
 import 'package:flutter_newsfeed/view/components/category_chips.dart';
 import 'package:flutter_newsfeed/view/components/search_bar.dart';
+import 'package:flutter_newsfeed/view/screens/news_web_page_screen.dart';
 import 'package:flutter_newsfeed/viewmodels/news_list_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -95,8 +96,11 @@ class NewsListPage extends StatelessWidget {
     print("NewsListPage.getCategoryNews / category: ${category?.nameJp}");
   }
 
-  // TODO
   _openArticleWebPage(article, BuildContext context) {
-    print("_openArticleWebPage: ${article.url}");
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => NewsWebPageScreen(article: article),
+      ),
+    );
   }
 }
