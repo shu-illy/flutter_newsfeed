@@ -4,7 +4,7 @@ import 'package:flutter_newsfeed/data/search_type.dart';
 import 'package:flutter_newsfeed/view/components/article_tile.dart';
 import 'package:flutter_newsfeed/view/components/category_chips.dart';
 import 'package:flutter_newsfeed/view/components/search_bar.dart';
-import 'package:flutter_newsfeed/viewmodels/news_list_viewmodel.dart';
+import 'package:flutter_newsfeed/viewmodels/news_list_view_model.dart';
 import 'package:provider/provider.dart';
 
 class NewsListPage extends StatelessWidget {

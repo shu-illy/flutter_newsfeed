@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_newsfeed/viewmodels/news_list_viewmodel.dart';
+import 'package:flutter_newsfeed/viewmodels/head_line_view_model.dart';
+import 'package:flutter_newsfeed/viewmodels/news_list_view_model.dart';
 import 'package:provider/provider.dart';
 
 import 'view/screens/home_screen.dart';
 import 'view/style/style.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider<NewsListViewModel>(
-    create: (context) => NewsListViewModel(),
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => NewsListViewModel()),
+      ChangeNotifierProvider(create: (_) => HeadLineViewModel()),
+    ],
     child: MyApp(),
   ));
 }
