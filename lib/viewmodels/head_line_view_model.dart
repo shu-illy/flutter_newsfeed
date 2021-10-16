@@ -21,4 +21,14 @@ class HeadLineViewModel extends ChangeNotifier {
 
   List<Article> _articles = [];
   List<Article> get articles => _articles;
+
+  Future<void> getHeadLines({required SearchType searchType}) async {
+    _searchType = searchType;
+    _isLoading = true;
+    notifyListeners();
+    _articles = await _repository.getNews(searchType: SearchType.HEAD_LINE);
+    print("searchType: $_searchType / articles: ${_articles[0].title}");
+    _isLoading = false;
+    notifyListeners();
+  }
 }
