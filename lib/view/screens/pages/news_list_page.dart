@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_newsfeed/data/category_info.dart';
 import 'package:flutter_newsfeed/data/search_type.dart';
+import 'package:flutter_newsfeed/view/components/article_tile.dart';
 import 'package:flutter_newsfeed/view/components/category_chips.dart';
 import 'package:flutter_newsfeed/view/components/search_bar.dart';
 import 'package:flutter_newsfeed/viewmodels/news_list_viewmodel.dart';
@@ -46,12 +47,11 @@ class NewsListPage extends StatelessWidget {
                           )
                         : ListView.builder(
                             itemCount: model.articles.length,
-                            itemBuilder: (context, int position) => ListTile(
-                                title:
-                                    Text(model.articles[position].title ?? ""),
-                                subtitle: Text(
-                                    model.articles[position].description ??
-                                        "")),
+                            itemBuilder: (context, int position) => ArticleTile(
+                              article: model.articles[position],
+                              onArticleClicked: (article) =>
+                                  _openArticleWebPage(article, context),
+                            ),
                           );
                   },
                 ),
@@ -63,7 +63,6 @@ class NewsListPage extends StatelessWidget {
     );
   }
 
-// TODO: 記事更新処理
   Future<void> onRefresh(BuildContext context) async {
     final viewModel = Provider.of<NewsListViewModel>(context, listen: false);
     await viewModel.getNews(
@@ -74,7 +73,6 @@ class NewsListPage extends StatelessWidget {
     print("NewsListPage.onRefresh");
   }
 
-// TODO キーワード記事取得処理
   Future<void> getKeywordNews(BuildContext context, keyword) async {
     final viewModel = Provider.of<NewsListViewModel>(context, listen: false);
     await viewModel.getNews(
@@ -85,7 +83,6 @@ class NewsListPage extends StatelessWidget {
     print("NewsListPage.getKeywordNews");
   }
 
-// TODO カテゴリー記事取得処理
   Future<void> getCategoryNews(BuildContext context, category) async {
     final viewModel = Provider.of<NewsListViewModel>(context, listen: false);
     await viewModel.getNews(
@@ -93,5 +90,10 @@ class NewsListPage extends StatelessWidget {
       category: category,
     );
     print("NewsListPage.getCategoryNews / category: ${category?.nameJp}");
+  }
+
+  // TODO
+  _openArticleWebPage(article, BuildContext context) {
+    print("_openArticleWebPage: ${article.url}");
   }
 }
