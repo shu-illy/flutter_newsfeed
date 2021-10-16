@@ -7,13 +7,21 @@ class HeadLinePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        // TODO
-        body: Container(
-          child: Center(
-            child: Text('Headlihne Page'),
+          // TODO
+          body: Container(
+            child: Center(
+              child: Text('Headlihne Page'),
+            ),
           ),
-        ),
-      ),
+          floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.refresh),
+            onPressed: () => onRefresh(),
+          )),
     );
+  }
+
+  // TODO 更新処理
+  onRefresh() {
+    print('HeadLinePage.onRefresh');
   }
 }
