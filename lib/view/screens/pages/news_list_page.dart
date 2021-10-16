@@ -17,6 +17,7 @@ class NewsListPage extends StatelessWidget {
       Future(() => viewModel.getNews(
           searchType: SearchType.CATEGORY, category: categories[0]));
     }
+    final primaryColor = Theme.of(context).primaryColor;
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -43,7 +44,9 @@ class NewsListPage extends StatelessWidget {
                     //
                     return model.isLoading
                         ? Center(
-                            child: CircularProgressIndicator(),
+                            child: CircularProgressIndicator(
+                              color: primaryColor,
+                            ),
                           )
                         : ListView.builder(
                             itemCount: model.articles.length,

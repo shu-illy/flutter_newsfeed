@@ -11,12 +11,16 @@ class ImageFromUrl extends StatelessWidget {
     // URLがスキーム(https:などを含まない場合があるので、対応する処理
     final isValidUrl =
         (imageUrl == null) ? false : imageUrl!.startsWith("http");
+    final primaryColor = Theme.of(context).primaryColor;
     if (imageUrl == null || imageUrl == '' || !isValidUrl) {
       return const Icon(Icons.broken_image);
     } else {
       return CachedNetworkImage(
         imageUrl: imageUrl!,
-        placeholder: (context, url) => CircularProgressIndicator(),
+        placeholder: (context, url) => Center(
+            child: CircularProgressIndicator(
+          color: primaryColor,
+        )),
         errorWidget: (context, url, error) => const Icon(Icons.broken_image),
         fit: BoxFit.cover,
       );
