@@ -2,7 +2,7 @@ import 'package:flutter_newsfeed/models/db/database.dart';
 import 'package:flutter_newsfeed/models/model/news_model.dart';
 
 extension ConvertToArticleRecord on List<Article> {
-  List<ArticleRecord>? toArticleRecords(List<Article> articles) {
+  List<ArticleRecord> toArticleRecords(List<Article> articles) {
     var articleRecords = <ArticleRecord>[];
     articles.forEach((article) {
       articleRecords.add(ArticleRecord(

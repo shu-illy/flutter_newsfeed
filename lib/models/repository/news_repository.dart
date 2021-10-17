@@ -6,6 +6,8 @@ import 'package:flutter_newsfeed/main.dart';
 import 'package:flutter_newsfeed/models/model/news_model.dart';
 import 'package:http/http.dart' as http;
 
+import 'package:flutter_newsfeed/util/extensions.dart';
+
 class NewsRepository {
   static const BASE_URL = 'https://newsapi.org/v2/top-headlines?country=jp';
   static const API_KEY = 'b8cf218454144da9b4e26ec3d08c7bca';
@@ -50,7 +52,9 @@ class NewsRepository {
     final dao = myDatabase.newsDao;
     final articles = News.fromJson(responseBody).articles;
 
-    await dao.insertAndReadNewsFromDB(articles);
-    return 
+    // Webから取得した記事リスト(Dartのモデルクラス: Article)をDBのテーブルクラス(ArticleRecord)に変換してDB登録・DBから取得
+    final articleRecords =
+        await dao.insertAndReadNewsFromDB(articles.toArticleRecords(articles));
+    return articleRecords.toArticles(articleRecords);
   }
 }
