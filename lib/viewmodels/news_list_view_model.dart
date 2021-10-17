@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_newsfeed/data/category_info.dart';
 import 'package:flutter_newsfeed/data/search_type.dart';
 import 'package:flutter_newsfeed/models/model/news_model.dart';
-import 'package:flutter_newsfeed/repository/news_repository.dart';
+import 'package:flutter_newsfeed/models/repository/news_repository.dart';
 
 class NewsListViewModel extends ChangeNotifier {
   final NewsRepository _repository = NewsRepository();
