@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:drift/drift.dart';
 import 'package:drift/native.dart';
+import 'package:flutter_newsfeed/models/db/dao.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart' as p;
 
@@ -16,7 +17,7 @@ class ArticleRecords extends Table {
   TextColumn get content => text()();
 }
 
-@DriftDatabase(tables: [ArticleRecords])
+@DriftDatabase(tables: [ArticleRecords], daos: [NewsDao])
 class MyDatabase extends _$MyDatabase {
   MyDatabase() : super(_openConnection());
 

@@ -335,6 +335,7 @@ class $ArticleRecordsTable extends ArticleRecords
 abstract class _$MyDatabase extends GeneratedDatabase {
   _$MyDatabase(QueryExecutor e) : super(SqlTypeSystem.defaultInstance, e);
   late final $ArticleRecordsTable articleRecords = $ArticleRecordsTable(this);
+  late final NewsDao newsDao = NewsDao(this as MyDatabase);
   @override
   Iterable<TableInfo> get allTables => allSchemaEntities.whereType<TableInfo>();
   @override
