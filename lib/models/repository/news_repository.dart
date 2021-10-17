@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_newsfeed/data/category_info.dart';
 import 'package:flutter_newsfeed/data/search_type.dart';
+import 'package:flutter_newsfeed/main.dart';
 import 'package:flutter_newsfeed/models/model/news_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -36,11 +37,20 @@ class NewsRepository {
     if (response.statusCode == 200) {
       //
       final responseBody = response.body;
-      results = News.fromJson(jsonDecode(responseBody)).articles;
+      // results = News.fromJson(jsonDecode(responseBody)).articles;
+      results = await insertAndReadFromDB(jsonDecode(responseBody));
     } else {
       throw Exception('Failed to load news');
     }
 
     return results;
+  }
+
+  Future<List<Article>> insertAndReadFromDB(responseBody) async {
+    final dao = myDatabase.newsDao;
+    final articles = News.fromJson(responseBody).articles;
+
+    await dao.insertAndReadNewsFromDB(articles);
+    return 
   }
 }
