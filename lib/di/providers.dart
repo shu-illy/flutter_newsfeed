@@ -29,15 +29,15 @@ List<SingleChildWidget> dependentModels = [
       dao: context.read<NewsDao>(),
     ),
   ),
-  ProxyProvider<NewsDao, NewsRepository>(
-    update: (_, dao, repository) => NewsRepository(dao: dao),
-  ),
+  // ProxyProvider<NewsDao, NewsRepository>(
+  //   update: (_, dao, repository) => NewsRepository(dao: dao),
+  // ),
 ];
 
 List<SingleChildWidget> viewModels = [
   ChangeNotifierProxyProvider<NewsRepository, HeadLineViewModel>(
     create: (context) => HeadLineViewModel(
-      repository: Provider.of<NewsRepository>(context, listen: false),
+      repository: context.read<NewsRepository>(),
     ),
     update: (context, repository, viewModel) =>
         viewModel!..onRepositoryUpdated(repository),

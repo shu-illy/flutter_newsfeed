@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_newsfeed/data/category_info.dart';
+import 'package:flutter_newsfeed/data/load_status.dart';
 import 'package:flutter_newsfeed/data/search_type.dart';
 import 'package:flutter_newsfeed/view/components/article_tile.dart';
 import 'package:flutter_newsfeed/view/components/category_chips.dart';
@@ -14,7 +15,8 @@ class NewsListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = Provider.of<NewsListViewModel>(context, listen: false);
-    if (!viewModel.isLoading && viewModel.articles.isEmpty) {
+    if (viewModel.loadStatus != LoadStatus.LOADING &&
+        viewModel.articles.isEmpty) {
       Future(() => viewModel.getNews(
           searchType: SearchType.CATEGORY, category: categories[0]));
     }
@@ -43,20 +45,22 @@ class NewsListPage extends StatelessWidget {
                 child: Consumer<NewsListViewModel>(
                   builder: (context, model, child) {
                     //
-                    return model.isLoading
-                        ? Center(
-                            child: CircularProgressIndicator(
-                              color: primaryColor,
-                            ),
-                          )
-                        : ListView.builder(
-                            itemCount: model.articles.length,
-                            itemBuilder: (context, int position) => ArticleTile(
-                              article: model.articles[position],
-                              onArticleClicked: (article) =>
-                                  _openArticleWebPage(article, context),
-                            ),
-                          );
+                    if (model.loadStatus == LoadStatus.LOADING) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: primaryColor,
+                        ),
+                      );
+                    } else {
+                      return ListView.builder(
+                        itemCount: model.articles.length,
+                        itemBuilder: (context, int position) => ArticleTile(
+                          article: model.articles[position],
+                          onArticleClicked: (article) =>
+                              _openArticleWebPage(article, context),
+                        ),
+                      );
+                    }
                   },
                 ),
               ),

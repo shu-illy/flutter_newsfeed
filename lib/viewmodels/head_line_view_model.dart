@@ -33,7 +33,7 @@ class HeadLineViewModel extends ChangeNotifier {
 
   Future<void> getHeadLines({required SearchType searchType}) async {
     _searchType = searchType;
-    await _repository.getNews(searchType: SearchType.HEAD_LINE);
+    _repository.getNews(searchType: SearchType.HEAD_LINE);
     print("searchType: $_searchType / articles: ${_articles[0].title}");
   }
 

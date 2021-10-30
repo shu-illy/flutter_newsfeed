@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_newsfeed/data/load_status.dart';
 import 'package:flutter_newsfeed/data/search_type.dart';
 import 'package:flutter_newsfeed/models/model/news_model.dart';
 import 'package:flutter_newsfeed/view/components/head_line_item.dart';
@@ -15,7 +16,8 @@ class HeadLinePage extends StatelessWidget {
     // final viewModel = Provider.of<HeadLineViewModel>(context, listen: false);
     // と同じ
 
-    if (!viewModel.isLoading && viewModel.articles.isEmpty) {
+    if (viewModel.loadStatus != LoadStatus.LOADING &&
+        viewModel.articles.isEmpty) {
       Future(() => viewModel.getHeadLines(searchType: SearchType.HEAD_LINE));
     }
     return SafeArea(
@@ -24,7 +26,7 @@ class HeadLinePage extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Consumer<HeadLineViewModel>(
               builder: (context, model, child) {
-                if (model.isLoading) {
+                if (model.loadStatus == LoadStatus.LOADING) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
