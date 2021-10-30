@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_newsfeed/data/category_info.dart';
+import 'package:flutter_newsfeed/data/load_status.dart';
 import 'package:flutter_newsfeed/data/search_type.dart';
 import 'package:flutter_newsfeed/models/model/news_model.dart';
 import 'package:flutter_newsfeed/models/repository/news_repository.dart';
@@ -18,11 +19,11 @@ class NewsListViewModel extends ChangeNotifier {
   String _keyword = "";
   String get keyword => _keyword;
 
-  bool _isLoading = false;
-  bool get isLoading => _isLoading;
-
   List<Article> _articles = [];
   List<Article> get articles => _articles;
+
+  LoadStatus _loadStatus = LoadStatus.DONE;
+  LoadStatus get loadStatus => _loadStatus;
 
   Future<void> getNews({
     required SearchType searchType,
@@ -33,17 +34,11 @@ class NewsListViewModel extends ChangeNotifier {
     _keyword = keyword ?? "";
     _category = category ?? categories[0];
 
-    _isLoading = true;
-    notifyListeners();
-
-    _articles = await _repository.getNews(
+    await _repository.getNews(
       searchType: _searchType,
       keyword: _keyword,
       category: _category,
     );
-
-    _isLoading = false;
-    notifyListeners();
   }
 
   @override
@@ -52,6 +47,9 @@ class NewsListViewModel extends ChangeNotifier {
     super.dispose();
   }
 
-  // TODO
-  onRepositoryUpdated(NewsRepository repository) {}
+  onRepositoryUpdated(NewsRepository repository) {
+    _articles = repository.articles;
+    _loadStatus = repository.loadStatus;
+    notifyListeners();
+  }
 }
