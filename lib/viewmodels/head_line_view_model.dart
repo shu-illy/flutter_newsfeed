@@ -5,7 +5,9 @@ import 'package:flutter_newsfeed/models/model/news_model.dart';
 import 'package:flutter_newsfeed/models/repository/news_repository.dart';
 
 class HeadLineViewModel extends ChangeNotifier {
-  final NewsRepository _repository = NewsRepository();
+  final NewsRepository _repository;
+
+  HeadLineViewModel({repository}) : _repository = repository;
 
   SearchType _searchType = SearchType.CATEGORY;
   SearchType get searchType => _searchType;
@@ -22,6 +24,12 @@ class HeadLineViewModel extends ChangeNotifier {
   List<Article> _articles = [];
   List<Article> get articles => _articles;
 
+  @override
+  void dispose() {
+    _repository.dispose();
+    super.dispose();
+  }
+
   Future<void> getHeadLines({required SearchType searchType}) async {
     _searchType = searchType;
     _isLoading = true;
@@ -31,4 +39,7 @@ class HeadLineViewModel extends ChangeNotifier {
     _isLoading = false;
     notifyListeners();
   }
+
+  // TODO
+  onRepositoryUpdated(NewsRepository repository) {}
 }
